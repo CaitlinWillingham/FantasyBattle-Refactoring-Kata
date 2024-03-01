@@ -21,16 +21,36 @@ class Equipment {
     Item getLeftHand() {
         return leftHand;
     }
+
     Item getRightHand() {
         return rightHand;
     }
+
     Item getHead() {
         return head;
     }
+
     Item getFeet() {
         return feet;
     }
+
     Item getChest() {
         return chest;
+    }
+
+    public float getSumDamageModifier() {
+        return leftHand.getDamageModifier() +
+                rightHand.getDamageModifier() +
+                head.getDamageModifier() +
+                feet.getDamageModifier() +
+                chest.getDamageModifier();
+    }
+
+    public int getSumBaseDamage() {
+        return leftHand.getBaseDamage() +
+                rightHand.getBaseDamage() +
+                head.getBaseDamage() +
+                feet.getBaseDamage() +
+                chest.getBaseDamage();
     }
 }

@@ -26,47 +26,19 @@ class Player extends Target {
             soak = totalDamage;
         } else if (other instanceof SimpleEnemy) {
             SimpleEnemy simpleEnemy = (SimpleEnemy) other;
-            soak = Math.round(
-                simpleEnemy.getArmor().getDamageSoak() *
-                (
-                    ((float) simpleEnemy.getBuffs()
-                        .stream()
-                        .mapToDouble(Buff::soakModifier)
-                        .sum()) +
-                    1f
-                )
-            );
+            soak = simpleEnemy.getSoak();
+
         }
         return soak;
     }
 
     private float getDamageModifier() {
-        Equipment equipment = this.inventory.getEquipment();
-        Item leftHand = equipment.getLeftHand();
-        Item rightHand = equipment.getRightHand();
-        Item head = equipment.getHead();
-        Item feet = equipment.getFeet();
-        Item chest = equipment.getChest();
         float strengthModifier = stats.getStrength() * 0.1f;
-        return strengthModifier +
-            leftHand.getDamageModifier() +
-            rightHand.getDamageModifier() +
-            head.getDamageModifier() +
-            feet.getDamageModifier() +
-            chest.getDamageModifier();
+        return strengthModifier + inventory.getSumDamageModifiers();
     }
 
     private int getBaseDamage() {
         Equipment equipment = this.inventory.getEquipment();
-        Item leftHand = equipment.getLeftHand();
-        Item rightHand = equipment.getRightHand();
-        Item head = equipment.getHead();
-        Item feet = equipment.getFeet();
-        Item chest = equipment.getChest();
-        return leftHand.getBaseDamage() +
-        rightHand.getBaseDamage() +
-        head.getBaseDamage() +
-        feet.getBaseDamage() +
-        chest.getBaseDamage();
+        return equipment.getSumBaseDamage();
     }
 }
